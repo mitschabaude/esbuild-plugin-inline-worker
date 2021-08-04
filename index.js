@@ -51,7 +51,7 @@ export default function inlineWorker(scriptText) {
 `;
 
 let cacheDir = findCacheDir({
-  name: 'eslint-plugin-inline-worker',
+  name: 'esbuild-plugin-inline-worker',
   create: true,
 });
 
