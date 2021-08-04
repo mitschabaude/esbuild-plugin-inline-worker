@@ -1,0 +1,32 @@
+{
+  "name": "esbuild-plugin-inline-workers",
+  "description": "Esbuild loader for inline Web Workers",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mitschabaude/esbuild-plugin-wat"
+  },
+  "keywords": [
+    "workers",
+    "esbuild"
+  ],
+  "author": "Gregor <gregor.mitscha-baude@gmx.at>",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": {
+      "import": "./index.js"
+    }
+  },
+  "browser": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "dependencies": {
+    "esbuild": "latest",
+    "find-cache-dir": "^3.3.1"
+  }
+}
