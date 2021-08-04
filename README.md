@@ -2,6 +2,10 @@
 
 This is a plugin for [esbuild](https://esbuild.github.io) which allows you to import `.worker.js` files to get the constructor for a Web Worker.
 
+```sh
+yarn add eslint-plugin-inline-worker
+```
+
 Example:
 
 ```js
