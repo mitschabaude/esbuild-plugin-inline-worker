@@ -1,7 +1,7 @@
 {
   "name": "esbuild-plugin-inline-worker",
   "description": "Esbuild loader for inline Web Workers",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/mitschabaude/esbuild-plugin-inline-worker"
