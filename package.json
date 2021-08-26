@@ -26,7 +26,9 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "esbuild": "latest",
     "find-cache-dir": "^3.3.1"
+  },
+  "peerDependencies": {
+    "esbuild": "latest"
   }
 }
