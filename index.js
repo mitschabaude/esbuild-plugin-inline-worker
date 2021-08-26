@@ -12,7 +12,7 @@ function inlineWorkerPlugin(extraConfig) {
 
     setup(build) {
       build.onLoad(
-        {filter: /\.worker.(js|jsx|ts|tsx)$/},
+        {filter: /\.worker\.(js|jsx|ts|tsx)$/},
         async ({path: workerPath}) => {
           // let workerCode = await fs.promises.readFile(workerPath, {
           //   encoding: 'utf-8',
