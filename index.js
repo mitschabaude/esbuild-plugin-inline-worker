@@ -29,6 +29,18 @@ export default function Worker() {
           };
         }
       );
+      
+      const name = extraConfig.workerName ? { name: extraConfig.workerName } : {}
+
+      const inlineWorkerFunctionCode = `
+export default function inlineWorker(scriptText) {
+  let blob = new Blob([scriptText], {type: 'text/javascript'});
+  let url = URL.createObjectURL(blob);
+  let worker = new Worker(url, ${JSON.stringify(name)});
+  URL.revokeObjectURL(url);
+  return worker;
+}
+`;
 
       build.onResolve({filter: /^__inline-worker$/}, ({path}) => {
         return {path, namespace: 'inline-worker'};
@@ -40,15 +52,7 @@ export default function Worker() {
   };
 }
 
-const inlineWorkerFunctionCode = `
-export default function inlineWorker(scriptText) {
-  let blob = new Blob([scriptText], {type: 'text/javascript'});
-  let url = URL.createObjectURL(blob);
-  let worker = new Worker(url);
-  URL.revokeObjectURL(url);
-  return worker;
-}
-`;
+
 
 let cacheDir = findCacheDir({
   name: 'esbuild-plugin-inline-worker',
@@ -66,6 +70,7 @@ async function buildWorker(workerPath, extraConfig) {
     delete extraConfig.entryPoints;
     delete extraConfig.outfile;
     delete extraConfig.outdir;
+    delete extraConfig.workerName;
   }
 
   await esbuild.build({
