@@ -43,26 +43,35 @@ build({
 
 Optionally, you can pass a configuration object which has the same interface as esbuild's [build API](https://esbuild.github.io/api/#build-api), which determines how the worker code is bundled:
 
+
+```ts
+export type InlineWorkerPluginConfig = {
+    buildOptions?: BuildOptions;
+    workerName?: string
+    workerArguments?: WorkerOptions
+}
+```
+
 ```js
-inlineWorkerPlugin(extraConfig);
+inlineWorkerPlugin(workerPluginConfig);
 ```
 
 This is how your custom config is used internally:
 
 ```js
-if (extraConfig) {
-  delete extraConfig.entryPoints;
-  delete extraConfig.outfile;
-  delete extraConfig.outdir;
+if (pluginConfig.buildOptions) {
+    delete pluginConfig.buildOptions.entryPoints;
+    delete pluginConfig.buildOptions.outfile;
+    delete pluginConfig.buildOptions.outdir;
 }
 
-await esbuild.build({
-  entryPoints: [workerPath],
-  bundle: true,
-  minify: true,
-  outfile: bundlePath,
-  target: 'es2017',
-  format: 'esm',
-  ...extraConfig, // <-- your config can override almost everything
+await build({
+    entryPoints: [workerPath],
+    bundle: true,
+    minify: true,
+    outfile: bundlePath,
+    target: "es2017",
+    format: "esm",
+    ...pluginConfig.buildOptions,
 });
 ```

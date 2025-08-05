@@ -3,14 +3,14 @@ import findCacheDir from "find-cache-dir";
 import fs from "fs";
 import path from "path";
 
-export type InlineWorkerPluginOptions = {
+export type InlineWorkerPluginConfig = {
     buildOptions?: BuildOptions;
     workerName?: string
     workerArguments?: WorkerOptions
 }
 
 export function inlineWorkerPlugin(
-    extraConfig: InlineWorkerPluginOptions = {},
+    workerPluginConfig: InlineWorkerPluginConfig = {},
 ) {
     return {
         name: "esbuild-plugin-inline-worker",
@@ -23,7 +23,7 @@ export function inlineWorkerPlugin(
                     //   encoding: 'utf-8',
                     // });
 
-                    const workerCode = await buildWorker(workerPath, extraConfig);
+                    const workerCode = await buildWorker(workerPath, workerPluginConfig);
                     return {
                         contents: `import inlineWorker from '__inline-worker'
 export default function Worker() {
@@ -36,8 +36,8 @@ export default function Worker() {
             );
 
             const options: WorkerOptions = {
-                name: extraConfig.workerName || undefined,
-                ...extraConfig.workerArguments,
+                name: workerPluginConfig.workerName || undefined,
+                ...workerPluginConfig.workerArguments,
             }
 
             const inlineWorkerFunctionCode = `
@@ -65,7 +65,7 @@ const cacheDir = findCacheDir({
     create: true,
 });
 
-async function buildWorker(workerPath: string, pluginConfig: InlineWorkerPluginOptions) {
+async function buildWorker(workerPath: string, pluginConfig: InlineWorkerPluginConfig) {
     const scriptNameParts = path.basename(workerPath).split(".");
     scriptNameParts.pop();
     scriptNameParts.push("js");
