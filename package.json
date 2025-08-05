@@ -13,22 +13,30 @@
   "author": "Gregor <gregor.mitscha-baude@gmx.at>",
   "license": "MIT",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "exports": {
     ".": {
-      "import": "./index.js"
+      "import": "./dist/index.js"
     }
   },
-  "browser": "index.js",
-  "types": "index.d.ts",
+  "browser": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "index.js",
-    "index.d.ts"
+    "dist/"
   ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
   "dependencies": {
     "find-cache-dir": "^3.3.1"
   },
   "peerDependencies": {
     "esbuild": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "^24.2.0",
+    "typescript": "^5.9.2"
   }
 }
