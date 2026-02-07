@@ -5,7 +5,7 @@ import path from "path";
 
 export type InlineWorkerPluginConfig = {
     buildOptions?: BuildOptions;
-    workerName?: string
+    workerName?: string | ((args: {workerPath: string}) => string);
     workerArguments?: WorkerOptions
 }
 
@@ -34,9 +34,8 @@ export default function Worker() {
                     };
                 },
             );
-
             const options: WorkerOptions = {
-                name: workerPluginConfig.workerName || undefined,
+                name: typeof workerPluginConfig.workerName === "function" ? workerPluginConfig.workerName({workerPath}) : (workerPluginConfig.workerName || undefined),
                 ...workerPluginConfig.workerArguments,
             }
 
